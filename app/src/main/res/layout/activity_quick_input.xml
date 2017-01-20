@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.raide_000.transactionkeeper.QuickInput"
+    android:background="@mipmap/background"
+    android:nestedScrollingEnabled="true"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_height="100dp"
+        android:text="Quick Input"
+        android:textSize="48sp"
+        android:id="@+id/qititle"
+        style="@style/title"
+        android:nestedScrollingEnabled="false" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="375dp"
+        android:id="@+id/scrollView"
+        android:scrollIndicators="right"
+        android:nestedScrollingEnabled="true"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/quickInputLayout">
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:text="+"
+        android:id="@+id/newQuickInput"
+        style="@style/quick_button_text"/>
+
+
+
+</LinearLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.raide_000.transactionkeeper.Settings"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:text="Settings"
+        android:id="@+id/title"
+        style="@style/title" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Account"
+                    android:id="@+id/addName"
+                    style="@style/mInputText" />
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addAccountText"
+                    android:singleLine="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:inputType="textCapSentences"/>
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:id="@+id/addAccountButton"
+                    android:background="@drawable/button_add"
+                    style="@style/quick_button_text"/>
+
+
+
+
+
+
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Change Account Color"
+                    android:id="@+id/accountColorTextView"
+                    style="@style/mInputText"/>
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/changeAccountColorSpinner"
+                    android:background="@drawable/spinner_style"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginBottom="10dp"/>
+                <SeekBar
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/colorSeekBar"
+                    android:max="6"/>
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Set"
+                    android:id="@+id/setColorButton"
+                    android:background="@drawable/button_set"
+                    style="@style/quick_button_text"/>
+
+
+
+
+
+
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove Account"
+                    android:id="@+id/removeName"
+                    style="@style/mInputText"/>
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/removeAccountSpinner"
+                    android:background="@drawable/spinner_style"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginBottom="10dp"/>
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove"
+                    android:id="@+id/removeAccountButton"
+                    android:background="@drawable/button_remove"
+                    style="@style/quick_button_text"/>
+
+
+
+
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove Quick Input"
+                    android:id="@+id/removeQuickInput"
+                    style="@style/mInputText"/>
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/removeQuickInputSpinner"
+                    android:background="@drawable/spinner_style"
+                    android:spinnerMode="dropdown"
+                    android:layout_marginBottom="10dp"/>
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remove"
+                    android:id="@+id/removeQuickInputButton"
+                    android:background="@drawable/button_remove"
+                    style="@style/quick_button_text"/>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

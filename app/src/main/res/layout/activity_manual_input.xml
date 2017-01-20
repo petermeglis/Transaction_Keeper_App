@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.raide_000.transactionkeeper.ManualInput"
+    android:background="@mipmap/background">
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:text="Manual Input"
+        android:textSize="48sp"
+        android:id="@+id/title"
+        android:layout_row="0"
+        android:layout_column="0"
+        style="@style/title" />
+
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Transaction Name"
+        android:id="@+id/name"
+        android:layout_below="@+id/title"
+        style="@style/mInputText" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nametext"
+        android:layout_below="@+id/name"
+        android:singleLine="true"
+        android:inputType="textCapSentences"/>
+
+
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Account"
+        android:id="@+id/account"
+        android:layout_below="@+id/nametext"
+        style="@style/mInputText" />
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:id="@+id/accounttext"
+        android:layout_below="@+id/account"
+        android:background="@drawable/spinner_style"
+        android:spinnerMode="dropdown"/>
+
+
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Amount"
+        android:id="@+id/amount"
+        android:layout_below="@+id/accounttext"
+        style="@style/mInputText" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/amounttext"
+        android:text="$"
+        android:inputType="numberDecimal"
+        android:layout_below="@+id/amount"
+        android:maxLines="1" />
+
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:id="@+id/date"
+        android:layout_below="@+id/amounttext"
+        style="@style/mInputText" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datetext"
+        android:layout_below="@+id/date"
+        style="@style/mInputText"
+        android:padding="@dimen/activity_vertical_margin"
+        android:text="11/30/2016"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/changeDateButton"
+        android:text="Change Date"
+        android:layout_below="@+id/date"
+        android:layout_toEndOf="@+id/datetext"
+        android:layout_gravity="right"
+        android:padding="@dimen/activity_vertical_margin"
+        style="@style/quick_button_text"
+        android:background="@drawable/create_button"/>
+
+
+
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:text="Create"
+        android:id="@+id/createbutton"
+        android:layout_alignParentBottom="true"
+        style="@style/quick_button_text"
+        android:background="@drawable/create_button" />
+
+
+</RelativeLayout>
