@@ -1,17 +1,19 @@
 package com.example.raide_000.transactionkeeper;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-
+/**
+ * titlescreen.java
+ *
+ * Holds the class related to the title screen of the app.
+ *
+ * Peter Meglis
+ * 12 February 2017
+ */
 public class TitleScreen extends AppCompatActivity {
 
     private Button qiButton;

@@ -8,6 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * newquickinput.java
+ *
+ * This class is used for creating a new quick input. A quick input
+ * is used for a transaction that repeatedly occurs, such as the swipe
+ * in for the dining commons.
+ *
+ * Peter Meglis
+ * 12 February 2017
+ */
 public class NewQuickInput extends AppCompatActivity {
 
     private EditText name;
@@ -21,8 +31,10 @@ public class NewQuickInput extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_quick_input);
 
+        // Sets the name
         name = (EditText) findViewById(R.id.newquickinputname);
 
+        // Sets the account
         account = (Spinner)findViewById(R.id.newquickinputaccount);
         String[] accounts = CurrentTransactions.data.getAccountNames();
         String[] items = new String[accounts.length + 1];
@@ -33,9 +45,9 @@ public class NewQuickInput extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         account.setAdapter(adapter);
 
+        // Sets the amount
         amount = (EditText) findViewById(R.id.amounttext);
         amount.setSelection(1);
-
 
         createButton = (Button) findViewById(R.id.newquickinputcreatebutton);
         createButton.setBackgroundResource(R.drawable.create_button);

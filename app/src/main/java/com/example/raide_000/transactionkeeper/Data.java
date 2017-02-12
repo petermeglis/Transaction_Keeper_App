@@ -3,7 +3,6 @@ package com.example.raide_000.transactionkeeper;
 import android.content.Context;
 import android.util.Log;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,18 +13,23 @@ import java.util.Calendar;
 import java.util.LinkedHashMap;
 
 /**
- * Created by Raide_000 on 10/27/2016.
+ * data.java
+ *
+ * Stores all of the data for the app in text files (accounts, current transactions, and quick inputs).
+ *
+ * Created by Peter Meglis on 10/27/2016.
  */
 public class Data {
 
-    private File transactionsFile;
-    private File accountsFile;
-    private File quickInputsFile;
+    private String transactionsFile;
+    private String accountsFile;
+    private String quickInputsFile;
 
     private ArrayList<Transaction> currentTransactions;
     private LinkedHashMap<String, String> accounts;
     private ArrayList<Transaction> quickInputs;
 
+    // Account colors
     public ArrayList<String> colors = new ArrayList<String>() {{
         add("#C88B8B8B");
         add("#C8B71C1C");
@@ -43,67 +47,48 @@ public class Data {
 
 
     public Data() {
-        this.transactionsFile = new File("currentTransactions.txt");
-        this.transactionsFile = new File("accounts.txt");
-        this.transactionsFile = new File("quickInputs.txt");
+        this.transactionsFile = "currentTransactions.txt";
+        this.accountsFile = "accounts.txt";
+        this.quickInputsFile = "quickInputs.txt";
 
         this.currentTransactions = new ArrayList<Transaction>();
         this.accounts = new LinkedHashMap<String, String>();
         this.quickInputs = new ArrayList<Transaction>();
 
-
-        System.out.println("Transactions:");
         read("currentTransactions.txt");
-        System.out.println("Accounts:");
         read("accounts.txt");
-        System.out.println("Quick Inputs:");
         read("quickInputs.txt");
-
-//        this.clearFile("quickInputs.txt");
-//
-//        addQuickInput(new Transaction("Lunch", "Meal Plan", "$3.85", ""));
-//        addQuickInput(new Transaction("Dinner", "Meal Plan", "$5.00", ""));
-//        addQuickInput(new Transaction("Laundry Wash", "Lion Cash+", "$1.50", ""));
-//        addQuickInput(new Transaction("Laundry Dry", "Lion Cash+", "$0.50", ""));
-//
-//        this.clearFile("accounts.txt");
-//
-        System.out.println("--------------");
-        read("accounts.txt");
-//
-//        addAccount("Meal Plan", "#DC304FFE");
-//        addAccount("Lion Cash+", "#DCD50000");
-
-//        clearQuickInputs();
-//        addQuickInput(new Transaction("Lunch", "Meal Plan", "$3.85", ""));
-//        addQuickInput(new Transaction("Dinner", "Meal Plan", "$5.00", ""));
-//        addQuickInput(new Transaction("Laundry Wash", "Lion Cash+", "$1.50", ""));
-//        addQuickInput(new Transaction("Laundry Dry", "Lion Cash+", "$0.50", ""));
-
-
-
-
-
     }
 
 
     // Accounts
 
+    /*
+     * Adds an account (name and account color) to the accounts file.
+     */
     public void addAccount(String name, String color) {
         accounts.put(name, color);
         writeAccount(name);
+        Graphics.toast("Account Added");
     }
 
+    /*
+     * Removes an account from the accounts file.
+     */
     public void removeAccount(String account) {
-        System.out.println("Removing account: " + account);
-        read("accounts.txt");
+        read(this.accountsFile);
         accounts.remove(account);
-        clearFile("accounts.txt");
+        // Resets just the file.
+        clearFile(this.accountsFile);
+        // Rewrites the accounts.
         writeAccounts();
     }
 
+    /*
+     * Gets the account names.
+     */
     public String[] getAccountNames() {
-        read("accounts.txt");
+        read(this.accountsFile);
         String[] strings = new String[accounts.size()];
         Object[] keys = accounts.keySet().toArray();
         for (int i = 0; i < keys.length; i++) {
@@ -112,29 +97,38 @@ public class Data {
         return strings;
     }
 
+    /*
+     * Gets the colors from the accounts.
+     */
     public String getAccountColor(String account) {
         if (account.equals("None") || account.equals(""))
             return colors.get(0);
         return accounts.get(account);
     }
 
+    /*
+     * Sets an account color.
+     */
     public void setAccountColor(String account, String color) {
         accounts.put(account, color);
         writeAccounts();
     }
 
+    /*
+     * Writes all the accounts to the file.
+     */
     public void writeAccounts() {
-        System.out.println("Writing to file");
         for (Object str : accounts.keySet()) {
             writeAccount(str.toString());
         }
-        System.out.println("Success");
     }
 
+    /*
+     * Helper - writes just one account to the file.
+     */
     public void writeAccount(String name) {
-        System.out.println("Writing account: " + name + accounts.get(name) + " to the file");
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput("accounts.txt", Context.MODE_APPEND | Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput(this.accountsFile, Context.MODE_APPEND | Context.MODE_PRIVATE));
             outputStreamWriter.write(name + splitter2 + accounts.get(name) + splitter1 + "\n");
             outputStreamWriter.close();
         }
@@ -153,52 +147,63 @@ public class Data {
 
     // Current Transactions
 
+    /*
+     * Adds a transaction to the file.
+     */
     public void addTransaction(Transaction t) {
-        System.out.println("Adding transaction: " + t);
         writeTransaction(t);
         Graphics.toast("Transaction Added");
     }
 
+    /*
+     * Removes a transaction from the file.
+     */
     public void removeTransaction(Transaction t) {
-        System.out.println("Removing transaction: " + t);
-        read("currentTransactions.txt");
+        read(this.transactionsFile);
         for (Transaction tr : currentTransactions) {
-            System.out.println(t.toString());
-            System.out.println(tr.toString());
             if (t.toString().equals(tr.toString())) {
-                System.out.println("True");
                 currentTransactions.remove(tr);
                 break;
             }
         }
-        clearFile("currentTransactions.txt");
+        // Clears just the file
+        clearFile(this.transactionsFile);
+        // Rewrites to the file
         writeTransactions();
+        Graphics.toast("Transaction Removed");
     }
 
+    /*
+     * Completely clears both the file and the data.
+     */
     public void clearTransactions() {
         currentTransactions = new ArrayList<Transaction>();
-        clearFile("currentTransactions.txt");
+        clearFile(this.transactionsFile);
     }
 
-
+    /*
+     * Gets the transactions from the file.
+     */
     public ArrayList<Transaction> getTransactions() {
-        read("currentTransactions.txt");
-        System.out.println("Getting Transactions");
+        read(this.transactionsFile);
         return currentTransactions;
     }
 
+    /*
+     * Writes all the transactions to the file.
+     */
     public void writeTransactions() {
-        System.out.println("Writing to file");
         for (Transaction t : currentTransactions) {
             writeTransaction(t);
         }
-        System.out.println("Success");
     }
 
+    /*
+     * Helper - writes a transaction to the transaction file.
+     */
     public void writeTransaction(Transaction t) {
-        System.out.println("Writing " + t + " to the file");
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput("currentTransactions.txt", Context.MODE_APPEND | Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput(this.transactionsFile, Context.MODE_APPEND | Context.MODE_PRIVATE));
             outputStreamWriter.write(t.toString() + splitter1 + "\n");
             outputStreamWriter.close();
         }
@@ -208,6 +213,9 @@ public class Data {
         }
     }
 
+    /*
+     * Sorts the transactions by accounts.
+     */
     public void sortByAccount() {
         for (int i = 0; i < currentTransactions.size(); i++) {
             int j = 0;
@@ -216,10 +224,13 @@ public class Data {
             }
             currentTransactions.add(j, currentTransactions.remove(i));
         }
-        clearFile("currentTransactions.txt");
+        clearFile(this.transactionsFile);
         writeTransactions();
     }
 
+    /*
+     * Sorts the transactions by date.
+     */
     public void sortByDate() {
         for (int i = 0; i < currentTransactions.size(); i++) {
             int j = 0;
@@ -228,7 +239,7 @@ public class Data {
             }
             currentTransactions.add(j, currentTransactions.remove(i));
         }
-        clearFile("currentTransactions.txt");
+        clearFile(this.transactionsFile);
         writeTransactions();
     }
 
@@ -239,55 +250,69 @@ public class Data {
 
     // Quick Inputs
 
+    /*
+     * Adds a quick input to the file.
+     */
     public void addQuickInput(Transaction t) {
-        System.out.println("Adding quick input: " + t);
         writeQuickInput(t);
+        Graphics.toast("Quick Input Added");
     }
 
+    /*
+     * Removes a quick input from the file.
+     */
     public void removeQuickInput(String t) {
-        System.out.println("Removing quick input: " + t);
-        read("quickInputs.txt");
+        read(this.quickInputsFile);
         for (Transaction tr : quickInputs) {
             if (t.equals(tr.getName())) {
-                System.out.println("True");
                 quickInputs.remove(tr);
                 break;
             }
         }
-        clearFile("quickInputs.txt");
+        clearFile(this.quickInputsFile);
         writeQuickInputs();
         Graphics.toast("Quick Input Removed");
     }
 
+    /*
+     * Gets the number of quick inputs.
+     */
     public int getNumQIs() {
-        read("quickInputs.txt");
+        read(this.quickInputsFile);
         return quickInputs.size();
     }
 
+    /*
+     * Completely clears the quick inputs from both the file and data.
+     */
     public void clearQuickInputs() {
         currentTransactions = new ArrayList<Transaction>();
-        clearFile("quickInputs.txt");
+        clearFile(this.quickInputsFile);
     }
 
-
+    /*
+     * Gets the quick inputs.
+     */
     public ArrayList<Transaction> getQuickInputs() {
-        read("quickInputs.txt");
-        System.out.println("Getting quick inputs");
+        read(this.quickInputsFile);
         return quickInputs;
     }
 
+    /*
+     * Writes all the quick inputs to the file.
+     */
     public void writeQuickInputs() {
-        System.out.println("Writing to file");
         for (Transaction t : quickInputs) {
             writeQuickInput(t);
         }
-        System.out.println("Success");
     }
 
+    /*
+     * Helper - writes just one quick input to the file.
+     */
     public void writeQuickInput(Transaction t) {
-        System.out.println("Writing " + t + " to the file");
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput("quickInputs.txt", Context.MODE_APPEND | Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput(this.quickInputsFile, Context.MODE_APPEND | Context.MODE_PRIVATE));
             outputStreamWriter.write(t.toString() + splitter1 + "\n");
             outputStreamWriter.close();
         }
@@ -302,21 +327,23 @@ public class Data {
 
     // All
 
+    /*
+     * Clears a file.
+     */
     public void clearFile(String file) {
-
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(MyApplication.getAppContext().openFileOutput(file, Context.MODE_PRIVATE));
             outputStreamWriter.write("");
             outputStreamWriter.close();
-            System.out.println("Successfully cleared data");
         }
         catch (FileNotFoundException e) {        }
         catch (IOException e) { }
     }
 
-
+    /*
+     * Reads a file, setting the data.
+     */
     public void read(String file) {
-        System.out.println("Reading data");
         String ret = "";
 
         try {
@@ -334,9 +361,8 @@ public class Data {
 
                 inputStream.close();
                 ret = stringBuilder.toString();
-                System.out.println("RET: " + ret);
 
-                if (file.equals("currentTransactions.txt")) {
+                if (file.equals(this.transactionsFile)) {
                     currentTransactions.clear();
                     String[] strings = ret.split("&");
                     for (String s : strings) {
@@ -344,7 +370,7 @@ public class Data {
                             currentTransactions.add(Transaction.toTransaction(s));
                     }
                 }
-                else if (file.equals("accounts.txt")) {
+                else if (file.equals(this.accountsFile)) {
                     accounts.clear();
                     String[] each = ret.split(splitter1);
                     for (String s : each) {
@@ -354,7 +380,7 @@ public class Data {
                         }
                     }
                 }
-                else if (file.equals("quickInputs.txt")) {
+                else if (file.equals(this.quickInputsFile)) {
                     quickInputs.clear();
                     String[] strings = ret.split(splitter1);
                     for (String s : strings) {
@@ -365,10 +391,6 @@ public class Data {
                 else {
                     System.out.println("ERROR READING FILE");
                 }
-
-
-
-                System.out.println("Successfully read");
             }
         }
         catch (FileNotFoundException e) {
@@ -379,13 +401,16 @@ public class Data {
 
     }
 
-
-
-
+    /*
+     * Gets the current date.
+     */
     public static String getDate() {
         return getDay() + getTime();
     }
 
+    /*
+     * Gets the current day.
+     */
     public static String getDay() {
         Calendar c = Calendar.getInstance();
         return (c.get(Calendar.MONTH) + 1) + "/"
@@ -393,6 +418,9 @@ public class Data {
                 + c.get(Calendar.YEAR) + " ";
     }
 
+    /*
+     * Gets the current time.
+     */
     public static String getTime() {
         Calendar c = Calendar.getInstance();
         String ampm = (c.get(Calendar.AM_PM) == 0) ? "AM" : "PM";
@@ -409,12 +437,4 @@ public class Data {
                 + min + " "
                 + ampm;
     }
-
-
-
-
-
-
-
-
 }

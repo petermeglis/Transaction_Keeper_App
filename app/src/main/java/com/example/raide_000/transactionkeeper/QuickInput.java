@@ -2,10 +2,7 @@ package com.example.raide_000.transactionkeeper;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -15,6 +12,14 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+/**
+ * quickinput.java
+ *
+ * This class is used for the quick input screen.
+ *
+ * Peter Meglis
+ * 12 February 2017
+ */
 public class QuickInput extends AppCompatActivity {
 
     private Button addButton;

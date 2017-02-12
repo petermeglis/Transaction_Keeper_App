@@ -4,7 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * Created by Raide_000 on 10/27/2016.
+ * myapplication.java
+ *
+ * This class is used just to get the context of the app.
+ *
+ * Created by Peter Meglis on 10/27/2016.
  */
 public class MyApplication extends Application {
 

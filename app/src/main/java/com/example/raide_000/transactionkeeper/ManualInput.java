@@ -1,27 +1,26 @@
 package com.example.raide_000.transactionkeeper;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
 import java.util.Calendar;
 
+/**
+ * manualinput.java
+ *
+ * This class handles the manual input class. A manual input is a transaction
+ * that the user creates and edits the contents themself.
+ *
+ * Created by Peter Meglis
+ * 12 February 2017
+ */
 public class ManualInput extends AppCompatActivity {
 
     private EditText name;
@@ -36,8 +35,10 @@ public class ManualInput extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_input);
 
+        // Sets name
         name = (EditText) findViewById(R.id.nametext);
 
+        // Sets account
         account = (Spinner)findViewById(R.id.accounttext);
         String[] accounts = CurrentTransactions.data.getAccountNames();
         String[] items = new String[accounts.length + 1];
@@ -48,15 +49,18 @@ public class ManualInput extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         account.setAdapter(adapter);
 
+        // Sets amount
         amount = (EditText) findViewById(R.id.amounttext);
         amount.setSelection(1);
 
+        // Sets date
         date = (TextView) findViewById(R.id.datetext);
         date.setText(Data.getDay());
 
-
+        /*
+         * Class used to set the date of a manual input if they choose to set a new date.
+         */
         class mDateSetListener implements DatePickerDialog.OnDateSetListener {
-
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
@@ -74,18 +78,17 @@ public class ManualInput extends AppCompatActivity {
         changeDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("POPUP DATE");
                 Calendar c = Calendar.getInstance();
                 int mYear = c.get(Calendar.YEAR);
                 int mMonth = c.get(Calendar.MONTH);
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
-                System.out.println("the selected " + mDay);
                 DatePickerDialog dialog = new DatePickerDialog(ManualInput.this,
                         new mDateSetListener(), mYear, mMonth, mDay);
                 dialog.show();
             }
         });
 
+        // Creates the transaction
         createButton = (Button) findViewById(R.id.createbutton);
         createButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -99,14 +102,6 @@ public class ManualInput extends AppCompatActivity {
                 Graphics.switchTo(ManualInput.this, TitleScreen.class);
             }
         });
-
-
-
     }
-
-
-
-
-
 
 }

@@ -17,8 +17,19 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+/**
+ * settings.java
+ *
+ * Settings class for the Transaction Keeper app. Available settings are:
+ * Adding a new account
+ * Changing an account color
+ * Removing an account
+ * Removing a quick input
+ *
+ * Peter Meglis
+ * February 2017
+ */
 public class Settings extends AppCompatActivity {
-
 
     private EditText addAccountName;
     private Button addButton;
@@ -35,8 +46,6 @@ public class Settings extends AppCompatActivity {
 
     private GradientDrawable drawable;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +56,7 @@ public class Settings extends AppCompatActivity {
 
         addAccountName = (EditText) findViewById(R.id.addAccountText);
 
-
+        // Adds account
         addButton = (Button) findViewById(R.id.addAccountButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -60,17 +69,18 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        // Sets color
         setButton = (Button) findViewById(R.id.setColorButton);
         setButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String account = changeAccountColor.getSelectedItem().toString();
                 String color = CurrentTransactions.data.colors.get(colorSeekBar.getProgress());
-                System.out.println("Setting" + account + "to" + color);
                 CurrentTransactions.data.setAccountColor(account, color);
                 Graphics.toast("Color Set");
             }
         });
 
+        // Removes account
         removeAccountButton = (Button) findViewById(R.id.removeAccountButton);
         removeAccountButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -97,6 +107,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        // Removes quick input
         removeQuickInputButton = (Button) findViewById(R.id.removeQuickInputButton);
         removeQuickInputButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -123,7 +134,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-
+        // Gets the input from the user
         changeAccountColor = (Spinner) findViewById(R.id.changeAccountColorSpinner);
         removeAccountName = (Spinner) findViewById(R.id.removeAccountSpinner);
         removeQuickInputName = (Spinner) findViewById(R.id.removeQuickInputSpinner);
@@ -159,7 +170,7 @@ public class Settings extends AppCompatActivity {
 
 
 
-
+        // Color bar from data.java colors
         colorSeekBar = (SeekBar) findViewById(R.id.colorSeekBar);
         colorSeekBar.setMax(CurrentTransactions.data.colors.size() - 1);
 
@@ -196,7 +207,9 @@ public class Settings extends AppCompatActivity {
 
     }
 
-
+    /*
+     * Refreshes the info for the spinners
+     */
     private void refreshSpinners() {
         String[] items = CurrentTransactions.data.getAccountNames();
         ArrayAdapter<String> accountAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -213,8 +226,9 @@ public class Settings extends AppCompatActivity {
         removeQuickInputName.setAdapter(quickInputAdapter);
     }
 
-
-
+    /*
+     * Sets the default seekbar progress based on the current account chosen for the color picker.
+     */
     private void setSeekBarProgress(String account) {
         String color = CurrentTransactions.data.getAccountColor(account);
         int index = CurrentTransactions.data.colors.indexOf(color);

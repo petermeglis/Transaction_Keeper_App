@@ -1,11 +1,12 @@
 package com.example.raide_000.transactionkeeper;
 
-import android.widget.TextView;
-
-import java.io.Serializable;
-
 /**
- * Created by Raide_000 on 10/12/2016.
+ * transaction.java
+ *
+ * A transaction contains a name, account, amount, and date. This
+ * is the main aspect of the app.
+ *
+ * Created by Peter Meglis on 10/12/2016.
  */
 public class Transaction {
 
@@ -22,9 +23,10 @@ public class Transaction {
         this.date = fixDate(date);
     }
 
-
+    /*
+     * Takes a string representation of a Transaction, and converts it to a Transaction object.
+     */
     public static Transaction toTransaction(String s) {
-        System.out.println(s);
         if (s.length() == 0)
             return null;
         String[] strings = s.split("~");
@@ -34,6 +36,9 @@ public class Transaction {
         return new Transaction(strings[0], strings[1], strings[2], strings[3]);
     }
 
+    /*
+     * If no name is given, gives the transaction a default name of "No Name"
+     */
     private String fixName(String name) {
         if (name.length() == 0)
             return "No Name";
@@ -41,6 +46,9 @@ public class Transaction {
             return name;
     }
 
+    /*
+     * If no account name is given, fixes account name to empty string.
+     */
     private String fixAccount(String account) {
         if (account.equals("None"))
             return "";
@@ -48,6 +56,9 @@ public class Transaction {
             return account;
     }
 
+    /*
+     * Fixes amount based on the common user inputs.
+     */
     private String fixAmount(String amount) {
         if (amount.length() == 0)
             return "$0.00";
@@ -65,23 +76,14 @@ public class Transaction {
             return amount;
     }
 
+    /*
+     * Fixes the date on the transaction if no time is given.
+     */
     private String fixDate(String date) {
         if (date.equals(Data.getDay()))
             return date + Data.getTime();
         return date;
     }
-
-    public String getRealDate() {
-        String[] temp = this.date.split(" ");
-        String dateTemp = temp[0];
-        String date = dateTemp.substring(dateTemp.length() - 4);
-        date += dateTemp.substring(dateTemp.indexOf("/") + 1, dateTemp.lastIndexOf("/"));
-        date += dateTemp.substring(0, dateTemp.indexOf("/"));
-        return date;
-    }
-
-
-
 
 
     public String getName() {
@@ -111,8 +113,6 @@ public class Transaction {
     public void setAccount(String account) {
         this.account = account;
     }
-
-    public void setAmount(String amount) { this.amount = amount; }
 
     public void setDate(String date) { this.date = date; }
 

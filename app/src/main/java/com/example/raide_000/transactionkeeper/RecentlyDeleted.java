@@ -1,16 +1,22 @@
 package com.example.raide_000.transactionkeeper;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * recentlydeleted.java
+ *
+ * This class is used for the recently deleted screen. This
+ * screen shows the last five recently deleted transactions.
+ *
+ * Peter Meglis
+ * 12 February 2017
+ */
 public class RecentlyDeleted extends AppCompatActivity {
 
     public static ArrayList<TextView> deleted = new ArrayList<TextView>();
@@ -25,6 +31,9 @@ public class RecentlyDeleted extends AppCompatActivity {
         update();
     }
 
+    /*
+     * Adds a transaction to the list of recently deleted
+     */
     public static void addTransaction(TextView textView) {
         textView.setBackgroundResource(R.drawable.deleted_transaction);
         textView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -40,6 +49,9 @@ public class RecentlyDeleted extends AppCompatActivity {
         }
     }
 
+    /*
+     * Updates the screen by removing then re-adding all the transactions.
+     */
     public void update() {
         for (TextView t : deleted) {
             ((LinearLayout)t.getParent()).removeView(t);

@@ -23,7 +23,6 @@
         <activity android:name=".RecentlyDeleted" />
         <activity android:name=".Settings" />
         <activity android:name=".NewQuickInput" />
-        <activity android:name=".EditTransaction"></activity>
     </application>
 
 </manifest>

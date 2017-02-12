@@ -14,6 +14,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
+/**
+ * currenttransactions.java
+ *
+ * A current transaction is a transaction stored in the database until the user deletes it. This
+ * class stores all of the current transactions.
+ *
+ * Peter Meglis
+ * 5 February 2017
+ */
 public class CurrentTransactions extends AppCompatActivity {
 
     public static ArrayList<TextView> textViews = new ArrayList<TextView>();
@@ -27,6 +37,7 @@ public class CurrentTransactions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_transactions);
 
+        // Popup menu for more settings like sort and clear
         menu = (ImageButton) findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +87,9 @@ public class CurrentTransactions extends AppCompatActivity {
     }
 
 
+    /*
+     * Removes all of textViews from the page.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -84,18 +98,21 @@ public class CurrentTransactions extends AppCompatActivity {
         }
     }
 
-
+    /*
+     * Adds a transaction to the data.
+     */
     public static void addTransaction(final Transaction t) {
         data.addTransaction(t);
     }
 
+    /*
+     * Adds a transaction's textView to the page
+     */
     public static void addTextView(final Transaction t) {
         final TextView textView = new TextView(MyApplication.getAppContext());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-//        layoutParams.setMargins(0, 0, 0, 20);
         layoutParams.setMargins(0, 0, 0, 10);
-
 
         textView.setLayoutParams(layoutParams);
         textView.setTextAlignment(LinearLayout.TEXT_ALIGNMENT_VIEW_START);
@@ -114,27 +131,28 @@ public class CurrentTransactions extends AppCompatActivity {
             }
         });
 
-
         textViews.add(0, textView);
     }
 
+    /*
+     * Removes a transaction and its textView from the data.
+     */
     public static void removeTransaction(TextView v, Transaction t) {
         data.removeTransaction(t);
         v.setVisibility(View.GONE);
         RecentlyDeleted.addTransaction(v);
         textViews.remove(v);
-        Graphics.toast("Transaction Removed");
     }
 
-
-
+    /*
+     * Updates the transactions from the data and adds their textViews to the page. Also
+     * adds date separators in between transactions.
+     */
     public void updateTransactions() {
         ArrayList<Transaction> list = data.getTransactions();
         textViews = new ArrayList<TextView>();
         String currentDate = "";
         for (Transaction t : list) {
-            System.out.println("Current " + currentDate);
-            System.out.println("Next " + t.getJustDate());
             if (dateList && !currentDate.equals(t.getJustDate())) {
                 currentDate = t.getJustDate();
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
@@ -153,6 +171,9 @@ public class CurrentTransactions extends AppCompatActivity {
         }
     }
 
+    /*
+     * Actually displays the list of textviews.
+     */
     public void display() {
         for (TextView t : textViews) {
             layout.addView(t);
